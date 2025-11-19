@@ -1,20 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Webpage Example</title>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Features Demo</title>
+    <script>
+        // This is a single-line comment in JavaScript
+
+        /* 
+         * This is a multi-line comment in JavaScript
+         * It can span multiple lines.
+         */
+
+        // Function to display an alert dialog box
+        function showAlert() {
+            alert("This is an alert dialog box!");
+        }
+
+        // Function to write HTML code and text content into a page
+        function writeContent() {
+            document.getElementById("content").innerHTML = "<p>This content was written by JavaScript!</p>";
+        }
+
+        // Function to work with a Date object and display it
+        function displayDate() {
+            const now = new Date();
+            document.getElementById("date").textContent = "Current Date and Time: " + now.toString();
+        }
+
+        // Function to demonstrate JavaScript operators
+        function calculateSum() {
+            const a = 5;
+            const b = 10;
+            const sum = a + b; // Using the + operator to add two numbers
+            document.getElementById("sum").textContent = "Sum of 5 and 10: " + sum;
+        }
+
+        // Function to demonstrate a timed command
+        function timedCommand() {
+            setTimeout(function() {
+                alert("This is a timed alert dialog box!");
+            }, 3000); // 3-second delay
+        }
+
+        // Creating a JavaScript function to initialize all actions
+        function initialize() {
+            showAlert();
+            writeContent();
+            displayDate();
+            calculateSum();
+            timedCommand();
+        }
+
+        // Calling the initialize function when the page loads
+        window.onload = initialize;
+    </script>
 </head>
 <body>
-	<h1>This webpage example uses the basic HTML tags.</h1>
-	<h2>This webpage example uses the basic HTML tags.</h2>
-	<h3>This webpage example uses the basic HTML tags.</h3>
-	<h4>This webpage example uses the basic HTML tags.</h4>
-	<p>This webpage example uses the basic HTML tags.</p>
+    <h1>JavaScript Features Demo</h1>
+    <div id="content"></div>
+    <div id="date"></div>
+    <div id="sum"></div>
 
-        <p>This webpage also uses paragraph tags.</p>
-        <p>This paragraph uses a line break after the word break<br><br><br><br> to insert a new blank line.</p>
-        <hr>
-        <hr>
-        <p>A horizontal rule is the line that appears above this paragraph.</p>
+    <!-- Button to trigger debugging tools -->
+    <button onclick="debugger;">Trigger Debugger</button>
 </body>
 </html>
