@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Call the outer function
+            outerFunction();
+
+            // Display car info
+            car.displayInfo();
+
+            // Create and greet a person
+            const person = new Person('John', 28);
+            person.greet();
+
+            // Make dog sound
+            dog.makeSound();
+
+            // Explore prototypes of dog
+            console.log("Prototypes of dog object:");
+            explorePrototypes(dog);
+
+            // Greet using call and apply
+            greet.call(person1, 'Hello');
+            greet.apply(person2, ['Hi']);
+
+            // Display people info
+            console.log("People in the array:");
+            people.forEach(p => p.greet());
+
+            // List properties of the car object
+            console.log("Properties of car object:");
+            listProperties(car);
+        });
+        
+        // Use nested functions
+        function outerFunction() {
+            innerFunction();
+            console.log("This is the outer function.");
+
+            function innerFunction() {
+                console.log("This is the inner function.");
+            }
+
+            
+        }
+
+        // Create an object literal
+        // const car = {
+        //     brand: 'Toyota',
+        //     model: 'Corolla',
+        //     year: 2020,
+        //     displayInfo: function() {
+        //         console.log(`Car: ${this.brand} ${this.model}, Year: ${this.year}`);
+        //     }
+        // };
+        const car = {
+            brand: 'Toyota',
+            model: 'Corolla',
+            year: 2020,
+            displayInfo: () => {
+                console.log(`Car: ${car.brand} ${car.model}, Year: ${car.year}`);
+            }
+        };
+
+        // Define an object class
+        class Person {
+            constructor(name1, age1) {
+                this.name = name1;
+                this.age = age1;
+            }
+
+            greet() {
+                console.log(`Hello, my name is ${this.name} and I am ${this.age} years old.`);
+            }
+        }
+
+        // Use object constructor functions
+        function Animal(type1, sound1) {
+            this.type = type1;
+            this.sound = sound1;
+        }
+
+        // Instantiating an object
+        const dog = new Animal();
+        dog.type = "dog"
+
+        // Define an object prototype
+        Animal.prototype.makeSound = function() {
+            console.log(`${this.type} goes ${this.sound}`);
+        };
+        Animal.prototype.makeSound1 = function() {
+            console.log(`${this.type} goes ${this.sound}`);
+        };
+        Animal.prototype.makeSound2 = function() {
+            console.log(`${this.type} goes ${this.sound}`);
+        };
+
+        // Explore prototype chains
+        function explorePrototypes(obj) {
+            let proto = Object.getPrototypeOf(obj);
+            console.log(proto);
+            // while(proto) {
+            //     console.log(proto);
+            //     proto = Object.getPrototypeOf(proto);
+            // }
+        }
+
+        // Use the apply() and call() methods
+        function greet(greeting) {
+            console.log(`${greeting}, my name is ${this.name}`);
+        }
+
+        const person1 = {
+            name: 'Alice'
+        };
+
+        const person2 = {
+            name: 'Bob'
+        };
+
+        // Work with objects and arrays
+        const people = [
+            new Person('Charlie', 30),
+            new Person('Dave', 25),
+            new Person('Eve', 35)
+        ];
+
+        // Create a for…in loop
+        function listProperties(obj) {
+            for (const key in obj) {
+                if (obj.hasOwnProperty(key)) {
+                    console.log(`${key}: ${obj[key]}`);
+                }
+            }
+        }
+
+        
+    </script>
+</head>
+<body>
+    <h1>Objects and Functions</h1>
+</body>
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Form and Field Examples</title>
+</head>
+<body>
+    <h1>JavaScript Form and Field Examples</h1>
+    
+    <form id="exampleForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required><br><br>
+        
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" required><br><br>
+
+        <label for="payment">Payment Method:</label>
+        <select id="payment" name="payment" required>
+            <option value="">Select a payment method</option>
+            <option value="credit">Credit Card</option>
+            <option value="debit">Debit Card</option>
+            <option value="paypal">PayPal</option>
+        </select><br><br>
+
+        <label>Shipping:</label>
+        <input type="radio" id="standard" name="shipping" value="standard" checked>
+        <label for="standard">Standard</label>
+        <input type="radio" id="express" name="shipping" value="express">
+        <label for="express">Express</label><br><br>
+
+        <label for="amount">Amount:</label>
+        <input type="number" id="amount" name="amount" required><br><br>
+
+        <label for="creditCard">Credit Card Number:</label>
+        <input type="text" id="creditCard" name="creditCard" required><br><br>
+        
+        <button type="submit">Submit</button>
+    </form>
+
+    <p id="output"></p>
+
+    <script>
+        // Reference forms and form fields
+        const form = document.getElementById('exampleForm');
+        const nameField = document.getElementById('name');
+        const ageField = document.getElementById('age');
+        const paymentField = document.getElementById('payment');
+        const shippingFields = document.getElementsByName('shipping');
+        const amountField = document.getElementById('amount');
+        const creditCardField = document.getElementById('creditCard');
+        const output = document.getElementById('output');
+
+        // Handle form submission
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            // Check form validity
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+
+            // Validate credit card number
+            if (!validateCreditCardNumber(creditCardField.value)) {
+                creditCardField.setCustomValidity('Invalid credit card number.');
+                creditCardField.reportValidity();
+                return;
+            } else {
+                creditCardField.setCustomValidity('');
+            }
+
+            // Process the form data
+            submitForm();
+        });
+
+        // Create calculated fields and format numeric and currency data
+        function submitForm() {
+            const name = nameField.value;
+            const age = parseInt(ageField.value);
+            const payment = paymentField.value;
+            const shipping = getSelectedShipping();
+            const amount = parseFloat(amountField.value);
+            const creditCard = creditCardField.value;
+
+            // Format currency
+            const formattedAmount = new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'EUR'
+            }).format(amount);
+
+            // Create a URL with the form data
+            const url = appendDataToURL('https://example.com/submit', {
+                name: name,
+                age: age,
+                payment: payment,
+                shipping: shipping,
+                amount: amount,
+                creditCard: creditCard
+            });
+
+            // Display the output
+            output.textContent = `Name: ${name}, Age: ${age}, Payment: ${payment}, Shipping: ${shipping}, Amount: ${formattedAmount}`;
+            output.textContent += `\n Generated URL: ${url}`;
+        }
+
+        // Retrieve field values from selection lists and radio buttons
+        function getSelectedShipping() {
+            for (let i = 0; i < shippingFields.length; i++) {
+                const field = shippingFields[i];
+                if (field.checked) {
+                    return field.value;
+                }
+            }
+            return null;
+        }
+
+        // Append field names and data to URLs
+        function appendDataToURL(url, data) {
+            const params = new URLSearchParams(data);
+            return `${url}?${params.toString()}`;
+        }
+
+        // Validate credit card numbers using the Luhn algorithm
+        function validateCreditCardNumber(number) {
+            const regex = /^\d{16}$/;
+            if (!regex.test(number)) {
+                return false;
+            }
+
+            let sum = 0;
+            for (let i = 0; i < number.length; i++) {
+                let digit = parseInt(number[i]);
+                if ((i % 2) === (number.length % 2)) {
+                    digit *= 2;
+                    if (digit > 9) {
+                        digit -= 9;
+                    }
+                }
+                sum += digit;
+            }
+            return (sum % 10) === 0;
+        }
+
+        // Work with the validityState object and create custom validation messages
+        nameField.addEventListener('input', () => {
+            if (!nameField.validity.valid) {
+                nameField.setCustomValidity('Please enter your name.');
+            } else {
+                nameField.setCustomValidity('');
+            }
+        });
+
+        ageField.addEventListener('input', () => {
+            if (!ageField.validity.valid) {
+                ageField.setCustomValidity('Please enter a valid age.');
+            } else {
+                ageField.setCustomValidity('');
+            }
+        });
+        // Explore the syntax of regular expressions and use a regular expression to extract data from the URL query string
+        function extractDataFromURL(url) {
+            const regex = /[?&]([^=#]+)=([^&#]*)/g;
+            let match;
+            const params = {};
+            while (match = regex.exec(url)) {
+                params[match[1]] = match[2];
+            }
+            return params;
+        }
+    </script>
+</body>
+</html>
